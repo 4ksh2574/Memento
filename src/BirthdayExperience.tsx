@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Sparkles, Gift, Mail, PartyPopper, ChevronRight, ChevronLeft } from 'lucide-react';
 
-type BirthdayPage = { title:string; recipient:string; message:string; memories?:string };\ntype ExperienceTheme={bg:string;ink:string;accent:string;decor:string};
+type BirthdayPage = { title:string; recipient:string; message:string; memories?:string };
+type ExperienceTheme={bg:string;ink:string;accent:string;decor:string};
 export default function BirthdayExperience({ page, theme }: { page:BirthdayPage; theme:ExperienceTheme }) {
   const [stage,setStage]=useState(0);
   const [popped,setPopped]=useState<number[]>([]);
