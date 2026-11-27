@@ -1,0 +1,28 @@
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Heart, Megaphone, Sparkles, Plus, Link2, Copy, ChevronRight, Feather, Gift, Mail, LockKeyhole, Moon, Sun } from 'lucide-react';
+
+type Kind='wish'|'sorry'|'notice'|'personal';
+type Page={id:string;kind:Kind;title:string;recipient:string;message:string;created:string};
+const choices:{kind:Kind;label:string;desc:string;icon:any}[]=[
+ {kind:'wish',label:'A wish',desc:'Celebrate a day or achievement',icon:Gift},
+ {kind:'sorry',label:'Say something',desc:'Sorry, thanks or heartfelt words',icon:Heart},
+ {kind:'notice',label:'Share a notice',desc:'An invitation or announcement',icon:Megaphone},
+ {kind:'personal',label:'A personal note',desc:'Make a page of your own',icon:Feather}
+];
+const sample:Page={id:'sample',kind:'wish',title:'A little reminder',recipient:'Someone special',message:'Some words are worth taking the time to write. This is a little space for them.',created:new Date().toISOString()};
+function App(){
+ const [dark,setDark]=useState(false); const [kind,setKind]=useState<Kind>('wish'); const [title,setTitle]=useState(''); const [recipient,setRecipient]=useState(''); const [message,setMessage]=useState(''); const [page,setPage]=useState<Page|null>(null); const [notice,setNotice]=useState('');
+ const path=window.location.pathname; const sharedId=path.match(/\/p\/([^/]+)/)?.[1];
+ useEffect(()=>{document.documentElement.dataset.theme=dark?'dark':'light';},[dark]);
+ useEffect(()=>{if(sharedId){try{const p=JSON.parse(localStorage.getItem('memento:'+sharedId)||'null');if(p)setPage(p);}catch{}}},[sharedId]);
+ const make=()=>{if(!title.trim()||!message.trim()){setNotice('Add a title and message first.');return;}const id=crypto.randomUUID().replaceAll('-','').slice(0,20);const p={id,kind,title,recipient,message,created:new Date().toISOString()};localStorage.setItem('memento:'+id,JSON.stringify(p));setPage(p);setNotice('Your preview is ready.');};
+ const share=()=>{if(!page)return;const url=location.origin+location.pathname.replace(/\/$/,'')+'#/p/'+page.id; navigator.clipboard?.writeText(url);setNotice('Demo link copied. In this prototype it works in this browser only.');};
+ const recipientMode=window.location.hash.startsWith('#/p/')||sharedId;
+ if(recipientMode&&page){return <div className="recipient"><button className="back" onClick={()=>{location.href=location.pathname}}>← Memento</button><article className="paper"><div className="mark">MEMENTO <Sparkles size={14}/></div><span className="eyebrow">{page.kind==='notice'?'A NOTE TO SHARE':'A MOMENT, KEPT'}</span><h1>{page.title}</h1>{page.recipient&&<p className="to">For {page.recipient}</p>}<div className="rule"/><p className="bodycopy">{page.message}</p><div className="paperfoot">Made with Memento</div></article></div>}
+ return <main className="shell"><nav className="nav"><div className="brand"><span className="brandicon"><Sparkles size={16}/></span>Memento</div><button className="iconbtn" aria-label="Toggle theme" onClick={()=>setDark(!dark)}>{dark?<Sun size={18}/>:<Moon size={18}/>}</button></nav>
+ <section className="hero"><span className="eyebrow">A PLACE FOR WORDS THAT MATTER</span><h1>Make it a<br/><em>moment.</em></h1><p>Some things deserve more than a message. Create a beautiful little page and share it with one link.</p><button className="primary" onClick={()=>document.getElementById('create')?.scrollIntoView({behavior:'smooth'})}>Create your Memento <ArrowUpRight size={17}/></button><div className="hero-art"><div className="artcard"><div className="artflower">✳</div><small>JUST FOR YOU</small><h3>A little<br/>something.</h3><div className="artline"/><span>Words worth keeping.</span></div><div className="orb orb1"/><div className="orb orb2"/></div></section>
+ <section className="create" id="create"><div className="sectionhead"><span className="eyebrow">01 / CREATE</span><h2>What are we making?</h2></div><div className="choices">{choices.map(c=>{const I=c.icon;return <button className={'choice '+(kind===c.kind?'selected':'')} key={c.kind} onClick={()=>setKind(c.kind)}><span className="choiceicon"><I size={20}/></span><span><strong>{c.label}</strong><small>{c.desc}</small></span><ChevronRight className="chev" size={17}/></button>})}</div><div className="editor"><label>Title<input value={title} onChange={e=>setTitle(e.target.value)} placeholder={kind==='notice'?'e.g. Annual gathering':'e.g. Happy birthday!'}/></label><label>To / audience <span className="optional">Optional</span><input value={recipient} onChange={e=>setRecipient(e.target.value)} placeholder="A name, group or leave blank"/></label><label>Your message<textarea rows={5} value={message} onChange={e=>setMessage(e.target.value)} placeholder="Write what you want them to read…"/></label><button className="primary full" onClick={make}><Sparkles size={17}/> Preview page</button>{notice&&<p className="notice">{notice}</p>}</div></section>
+ {page&&<section className="previewsection"><span className="eyebrow">02 / PREVIEW</span><article className="paper mini"><div className="mark">MEMENTO <Sparkles size={14}/></div><h2>{page.title}</h2>{page.recipient&&<p className="to">For {page.recipient}</p>}<div className="rule"/><p className="bodycopy">{page.message}</p><div className="paperfoot">Made with Memento</div></article><button className="primary full" onClick={share}><Copy size={17}/> Copy demo link</button><p className="fineprint">This foundation preview stores pages locally in your browser. Shared links and cloud storage will be added in the next build.</p></section>}
+ <footer><span>MEMENTO</span><p>Keep the words that matter.</p></footer></main>;
+}
+export default App;
