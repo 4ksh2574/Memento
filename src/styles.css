@@ -50,3 +50,6 @@ html:has(.landing),body:has(.landing){overscroll-behavior-y:auto}
 .choices .choiceicon{width:44px;height:44px}
 .choices .choice strong{font-size:15px}
 .choices .choice small{font-size:12px;line-height:1.5}
+
+/* Custom theme editor controls */
+.customizer{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}.customizer label{display:grid;gap:8px;font-size:13px;font-weight:600}.customizer input[type=color]{width:100%;height:48px;border:1px solid var(--line);border-radius:12px;padding:4px;background:var(--bg)}.customizer select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);color:var(--ink)}@media(max-width:540px){.customizer{grid-template-columns:1fr 1fr}}
