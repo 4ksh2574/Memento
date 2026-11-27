@@ -23,8 +23,8 @@
 .landing,.create,.previewsection,.recipient{animation:momento-rise .65s cubic-bezier(.2,.75,.25,1) both}
 .artcard{animation:momento-rise .8s .12s both, momento-orbit 7s 1s ease-in-out infinite}
 .orb1{animation:momento-orbit 9s ease-in-out infinite}.orb2{animation:momento-orbit 11s reverse ease-in-out infinite}
-.primary,.iconbtn,.choice,.themeoption,.birthday-button,.balloon,.gift-box{transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s,border-color .32s,background .32s}
-.primary:active,.iconbtn:active,.choice:active,.themeoption:active,.birthday-button:active,.balloon:active,.gift-box:active{transform:scale(.96)}
+.primary,.choice,.themeoption,.birthday-button,.balloon,.gift-box{transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s,border-color .32s,background .32s}
+.primary:active,.choice:active,.themeoption:active,.birthday-button:active,.balloon:active,.gift-box:active{transform:scale(.96)}
 .choice{animation:momento-rise .45s both}.choice:nth-child(2){animation-delay:.06s}.choice:nth-child(3){animation-delay:.12s}.choice:nth-child(4){animation-delay:.18s}
 .themeoption{animation:momento-soft-in .4s both}.themeoption:nth-child(2){animation-delay:.04s}.themeoption:nth-child(3){animation-delay:.08s}.themeoption:nth-child(4){animation-delay:.12s}.themeoption:nth-child(5){animation-delay:.16s}
 .theme-preview,.paper.mini,.birthday-letter{animation:momento-rise .7s cubic-bezier(.2,.75,.25,1) both}
