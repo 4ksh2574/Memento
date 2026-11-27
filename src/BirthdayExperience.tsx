@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Sparkles, Gift, Mail, PartyPopper, ChevronRight, ChevronLeft } from 'lucide-react';
 
-type BirthdayPage = { title:string; recipient:string; message:string; memories?:string };
-export default function BirthdayExperience({ page }: { page:BirthdayPage }) {
+type BirthdayPage = { title:string; recipient:string; message:string; memories?:string };\ntype ExperienceTheme={bg:string;ink:string;accent:string;decor:string};
+export default function BirthdayExperience({ page, theme }: { page:BirthdayPage; theme:ExperienceTheme }) {
   const [stage,setStage]=useState(0);
   const [popped,setPopped]=useState<number[]>([]);
   const [puzzle,setPuzzle]=useState(false);
   const balloons=['🎈','🎈','🎈','🎈','🎈'];
-  const next=()=>setStage(s=>Math.min(5,s+1)); const memoryList=(page.memories||'').split('\\n').map(x=>x.trim()).filter(Boolean);
-  return <main className="birthday" aria-label="Birthday surprise">
+  const next=()=>setStage(s=>Math.min(5,s+1)); const memoryList=(page.memories||'').split(/\\r?\\n/).map(x=>x.trim()).filter(Boolean);
+  return <main className="birthday" aria-label="Birthday surprise" style={{"--moment-bg":theme.bg,"--moment-ink":theme.ink,"--moment-accent":theme.accent} as React.CSSProperties}>
     <div className="birthday-top"><span>MOMENTO</span><Sparkles size={15}/></div>
     {stage===0&&<section className="birthday-scene cake-scene"><div className="birthday-kicker">A LITTLE CELEBRATION</div><h1>{page.recipient ? 'It\'s your day, '+page.recipient+'.' : 'It\'s your day.'}</h1><div className="cake" aria-label="Birthday cake"><div className="candles">{[0,1,2].map(n=><span key={n} className="candle"><i className="flame"/></span>)}</div><div className="cake-top"/><div className="cake-middle"/><div className="cake-bottom"/><div className="cake-plate"/></div><p>Make a wish.</p><button className="birthday-button" onClick={next}>Blow out the candles <ChevronRight size={17}/></button><small>Tap to make the moment</small></section>}
     {stage===1&&<section className="birthday-scene gift-scene"><div className="birthday-kicker">SOMETHING FOR YOU</div><h1>A little gift.</h1><button className="gift-box" onClick={next} aria-label="Open gift"><span className="gift-ribbon"/><span className="gift-bow">✳</span><span className="gift-label">OPEN</span></button><p>There's something waiting inside.</p><button className="birthday-button" onClick={next}>Open your gift <ChevronRight size={17}/></button></section>}
