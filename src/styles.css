@@ -83,3 +83,11 @@ html:has(.landing),body:has(.landing){overscroll-behavior-y:auto}
 
 /* Bright, saturated party balloon finish */
 .age-balloon:before{background:radial-gradient(ellipse at 28% 19%,#ffffff 0 3%,#ffffff90 8%,transparent 26%),radial-gradient(ellipse at 72% 80%,#0003,transparent 45%),var(--balloon-color)!important;box-shadow:inset -13px -19px 24px #0002,inset 10px 12px 20px #ffffff65,0 9px 16px #0003!important}
+
+
+/* Remove mobile tap-selection flashes while preserving keyboard focus accessibility */
+button, a, [role="button"], .age-balloon, .gift-box, .choice, .themeoption, .style-option {
+  -webkit-tap-highlight-color: transparent;
+}
+button:not(:focus-visible), a:not(:focus-visible), [role="button"]:not(:focus-visible), .age-balloon:not(:focus-visible) { outline: none; }
+button:focus-visible, a:focus-visible, [role="button"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
