@@ -22,7 +22,7 @@ export default function BirthdayExperience({ page, theme }: { page:BirthdayPage;
     window.setTimeout(()=>{
       setPopped(current=>current.includes(index)?current:[...current,index]);
       setBursting(current=>current.filter(item=>item!==index));
-    },560);
+    },640);
   };
   const next=()=>setStage(s=>Math.min(5,s+1)); const cleanText=(text:string)=>text.replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n').replace(/\\r/g,''); const memoryList=cleanText(page.memories||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
   return <main className="birthday" aria-label="Wish experience" style={{"--moment-bg":theme.bg,"--moment-ink":theme.ink,"--moment-accent":theme.accent,fontFamily:({"default":"system-ui, sans-serif","sans":"DM Sans, sans-serif","serif":"Playfair Display, serif","handwritten":"Caveat, cursive","classic":"Lora, serif","editorial":"Cormorant Garamond, serif","literary":"Merriweather, serif","samarkan":"Samarkan, cursive"} as Record<string,string>)[page.font||"default"]||"system-ui, sans-serif"} as React.CSSProperties}>
