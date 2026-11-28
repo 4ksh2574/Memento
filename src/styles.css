@@ -91,3 +91,71 @@ button, a, [role="button"], .age-balloon, .gift-box, .choice, .themeoption, .sty
 }
 button:not(:focus-visible), a:not(:focus-visible), [role="button"]:not(:focus-visible), .age-balloon:not(:focus-visible) { outline: none; }
 button:focus-visible, a:focus-visible, [role="button"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+ 
+/* Signature balloon pop: squash, snap, shockwave and colourful confetti */
+.age-balloon:not(.burst){transition:filter .28s ease,scale .28s cubic-bezier(.2,.8,.2,1)}
+.age-balloon:disabled{cursor:default}
+.age-balloon.burst{
+  animation:balloon-launch .56s cubic-bezier(.18,.82,.22,1) forwards!important;
+  animation-delay:0s!important;
+  z-index:40!important;
+  pointer-events:none!important;
+  filter:drop-shadow(0 0 18px color-mix(in srgb,var(--balloon-color) 70%,white))!important;
+}
+.age-balloon.burst:before{animation:balloon-snap .56s cubic-bezier(.18,.82,.22,1) forwards!important}
+.age-balloon.burst .balloon-number{animation:number-flash .2s ease-out forwards}
+.age-balloon.burst .balloon-knot,.age-balloon.burst:after{animation:balloon-string-away .22s ease forwards}
+.pop-ring{position:absolute;inset:-10px;border:3px solid color-mix(in srgb,var(--balloon-color) 70%,white);border-radius:50%;opacity:0;pointer-events:none}
+.age-balloon.burst .pop-ring{animation:pop-shockwave .52s cubic-bezier(.12,.72,.24,1) forwards}
+.burst-particles{position:absolute;inset:0;display:block;opacity:1;overflow:visible;pointer-events:none}
+.burst-particles i{position:absolute;left:50%;top:43%;width:9px;height:9px;border-radius:2px;background:#fff;opacity:0;box-shadow:0 0 8px #fff9}
+.burst-particles i:nth-child(2n){background:#ffe36e;border-radius:50%;width:7px;height:7px}
+.burst-particles i:nth-child(3n){background:#ff74b8;clip-path:polygon(50% 0,62% 35%,100% 50%,62% 65%,50% 100%,38% 65%,0 50%,38% 35%)}
+.burst-particles i:nth-child(4n){background:#74e9ff;width:6px;height:11px}
+.age-balloon.burst .burst-particles i{animation:pop-fragment .48s cubic-bezier(.12,.72,.22,1) forwards}
+.age-balloon.burst .burst-particles i:nth-child(2){animation-delay:.025s}
+.age-balloon.burst .burst-particles i:nth-child(3){animation-delay:.045s}
+.age-balloon.burst .burst-particles i:nth-child(4){animation-delay:.015s}
+.age-balloon.burst .burst-particles i:nth-child(5){animation-delay:.04s}
+.age-balloon.burst .burst-particles i:nth-child(6){animation-delay:.02s}
+.age-balloon.burst .burst-particles i:nth-child(7){animation-delay:.055s}
+.age-balloon.burst .burst-particles i:nth-child(8){animation-delay:.03s}
+.cake-scene:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--pop-x,50%) var(--pop-y,50%),#fff9 0, color-mix(in srgb,var(--moment-accent) 40%,transparent) 9%,transparent 35%);mix-blend-mode:screen}
+.cake-scene.pop-impact:after{animation:scene-pop-flash .44s ease-out both}
+.cake-scene.pop-impact .age-balloon:not(.burst){scale:1.035;filter:brightness(1.12) drop-shadow(0 8px 14px #0002)}
+.cake-revealed{animation:cake-reveal .82s cubic-bezier(.16,.9,.24,1) both,cake-float 4s ease-in-out .82s infinite!important}
+@keyframes balloon-launch{
+  0%{scale:1;rotate:0deg;opacity:1}
+  12%{scale:.78;rotate:-8deg;opacity:1}
+  30%{scale:1.24;rotate:9deg;opacity:1}
+  44%{scale:.92;rotate:-5deg;opacity:.96}
+  100%{scale:.04;rotate:24deg;opacity:0;filter:blur(5px)}
+}
+@keyframes balloon-snap{
+  0%{scale:1 1}
+  12%{scale:.82 1.12}
+  30%{scale:1.16 .86}
+  44%{scale:1.02 1.02}
+  100%{scale:.03;opacity:0;filter:blur(3px)}
+}
+@keyframes number-flash{to{scale:1.6;opacity:0;filter:blur(3px)}}
+@keyframes balloon-string-away{to{opacity:0;scale:.2;filter:blur(2px)}}
+@keyframes pop-shockwave{0%{scale:.18;opacity:0}18%{opacity:.95}100%{scale:1.95;opacity:0}}
+@keyframes pop-fragment{
+  0%{translate:0 0;scale:.1;rotate:0deg;opacity:0}
+  16%{scale:1.15;opacity:1}
+  100%{translate:var(--particle-x) var(--particle-y);scale:.05;rotate:150deg;opacity:0}
+}
+@keyframes scene-pop-flash{0%{opacity:0}22%{opacity:.9}100%{opacity:0}}
+@keyframes cake-reveal{
+  0%{transform:translateY(16px) scale(.78);filter:blur(8px);opacity:.2}
+  58%{transform:translateY(-8px) scale(1.06);filter:blur(0);opacity:1}
+  78%{transform:translateY(3px) scale(.985)}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .age-balloon.burst,.age-balloon.burst:before,.age-balloon.burst .pop-ring,.age-balloon.burst .burst-particles i,.cake-revealed{animation:none!important}
+  .age-balloon.burst{opacity:0}
+  .cake-revealed{opacity:1;filter:none}
+}
